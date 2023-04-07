@@ -1,3 +1,4 @@
-SPOTIFY_CLIENT_ID=''
-SPOTIFY_CLIENT_SECRET=''
-SPOTIFY_REDIRECT_URI='https%3A%3A%2Fdavi-canuto-spotify'
+SPOTIFY_CLIENT_ID: 44e764ccc8de462e8fa5fd86f3639f37
+SPOTIFY_CLIENT_SECRET: 8e001ecd19174732a9ca638407bd352b
+SPOTIFY_REDIRECT_URI: https://github.com/davi-canuto/auth/spotify/callback
+SPOTIFY_LOCAL_REDIRECT_URI: http://localhost:8888/callback
