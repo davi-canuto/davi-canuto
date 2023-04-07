@@ -1,3 +1,2 @@
-/.bundle
-config/application.yml
-.byebug_history
+/spotify_api/config/application.yml
+/spotify_api/.byebug_history/
