@@ -43,6 +43,8 @@ GEM
     omniauth-oauth2 (1.8.0)
       oauth2 (>= 1.4, < 3)
       omniauth (~> 2.0)
+    omniauth-spotify (0.0.13)
+      omniauth-oauth2 (~> 1.1)
     public_suffix (5.0.1)
     rack (2.2.6.4)
     rack-protection (3.0.5)
@@ -77,6 +79,9 @@ PLATFORMS
 DEPENDENCIES
   byebug
   figaro!
+  omniauth
+  omniauth-oauth2
+  omniauth-spotify
   rspotify
   sinatra
 
