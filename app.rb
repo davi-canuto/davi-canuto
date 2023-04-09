@@ -25,7 +25,7 @@ set :session_secret, ENV['SESSION_SECRET']
 get '/' do
   redirect_uri = 'http://localhost:9292/callback'
   state = SecureRandom.hex(16)
-  scope = 'user-read-private user-read-email user-top-read user-read-currently-playing user-read-playback-state'
+  scope = 'user-read-currently-playing user-read-recently-played'
 
   uri = URI('https://accounts.spotify.com/authorize')
 
@@ -96,7 +96,6 @@ get '/my_recently_play' do
   status_code = res.code.to_i
 
   if status_code == 200
-    byebug
     JSON.parse(res.body)
   else
     status status_code
