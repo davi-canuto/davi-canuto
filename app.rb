@@ -1,43 +1,79 @@
-require 'rubygems'
-require 'bundler'
-Bundler.setup(:default)
-
+require 'securerandom'
+require 'base64'
+require 'json'
+require 'net/http'
+require 'uri'
 require 'byebug'
 require 'sinatra'
 require 'erb'
-require 'figaro'
-require 'rspotify'
-require 'omniauth'
-require 'omniauth-oauth2'
-require 'omniauth-spotify'
-require './spotify_auth'
-require './spotify_api'
+require 'dotenv/load'
 
-Figaro.application = Figaro::Application.new(environment: "development", path: "config/application.yml")
-Figaro.application.load
+require_relative 'models/spotify_auth_api'
+require_relative 'models/spotify_api'
 
-configure do
-  set :client_id, ENV['SPOTIFY_CLIENT_ID']
-  set :client_secret, ENV['SPOTIFY_CLIENT_SECRET']
-  set :redirect_url, settings.environment == :development ? ENV['SPOTIFY_LOCAL_REDIRECT_URI'] : ENV['SPOTIFY_REDIRECT_URI']
+def escape_url(url)
+  URI.escape(url, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
 end
 
-use Rack::Session::Cookie
-use Rack::Protection::AuthenticityToken
+def get_spotify_auth_url
+  client_id = ENV['SPOTIFY_CLIENT_ID']
+  redirect_uri = escape_url("#{request.base_url}/auth/callback/spotify")
+  scopes = ['user-read-currently-playing', 'user-read-email']
 
-# use OmniAuth::Builder do
-#   provider :spotify, ENV['SPOTIFY_CLIENT_ID'], ENV['SPOTIFY_CLIENT_SECRET'], scope: 'user-read-email playlist-modify-public user-library-read user-library-modify'
-# end
+  "https://accounts.spotify.com/authorize?client_id=" +
+    "#{client_id}&response_type=code&redirect_uri=" +
+    "#{redirect_uri}&scope=#{scopes.join('%20')}"
+end
+
+configure do
+  file = File.new("#{settings.root}/log/#{settings.environment}.log", 'a+')
+  file.sync = true
+
+  use Rack::CommonLogger, file
+end
+
+enable :sessions
+set :session_secret, ENV['SESSION_SECRET']
 
 # ROUTES
 
-get '/auth/spotify/callback' do
-  RSpotify.authenticate(settings.client_id,settings.client_secret)
-  byebug
-end
-
 get '/' do
+  redirect_uri = 'http://localhost:9292/callback'
+  state = SecureRandom.hex(16)
+  scope = 'user-read-private user-read-email'
+
+  uri = URI('https://accounts.spotify.com/authorize')
+
+  uri.query = URI.encode_www_form({
+    response_type: 'code',
+    client_id: ENV['SPOTIFY_CLIENT_ID'],
+    scope: scope,
+    redirect_uri: redirect_uri,
+    state: state
+  })
+
+  redirect uri.to_s
 end
 
-post '/auth/failure' do
+# Callback for Spotify OAuth authentication.
+get '/callback' do
+  code = params['code']
+  redirect_uri = "#{request.base_url}/callback"
+
+  spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
+  tokens = spotify_auth_api.get_tokens(code, redirect_uri)
+
+
+  if tokens
+    session['access_token'] = tokens['access_token']
+    session['refresh_token'] = tokens['refresh_token']
+
+    spotify_api = SpotifyApi.new(session['access_token'], logger: logger)
+
+    current_track = spotify_api.get_currently_playing
+    puts current_track
+  else
+    status 401
+    "Failed to authenticate with Spotify"
+  end
 end
