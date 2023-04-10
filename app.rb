@@ -52,14 +52,20 @@ get '/callback' do
     session['access_token'] = tokens['access_token']
     session['refresh_token'] = tokens['refresh_token']
 
-    redirect '/my_recently_play'
+    redirect '/my-current-track'
   else
     status 401
     "Failed to authenticate with Spotify"
   end
 end
 
-get '/my_current_track' do
+get '/now-playing' do
+  @svg = make_attrs(data: session['now_playing'])
+
+  erb :spotify
+end
+
+get '/my-current-track' do
   spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
   tokens = spotify_auth_api.refresh_tokens(session['refresh_token'])
   token = tokens['access_token']
@@ -74,14 +80,24 @@ get '/my_current_track' do
   status_code = res.code.to_i
 
   if status_code == 200
-    JSON.parse(res.body)
+    session['now_playing'] = {
+      action: :my_current_track,
+      data: JSON.parse(res.body)
+    }
+    redirect '/now-playing'
+  elsif status_code == 204
+    redirect '/my-recently-play'
   else
-    status status_code
-    res.message
+    @error = {
+      status: status_code,
+      message: res.message
+    }
+
+    erb :not_playing
   end
 end
 
-get '/my_recently_play' do
+get '/my-recently-play' do
   spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
   tokens = spotify_auth_api.refresh_tokens(session['refresh_token'])
   token = tokens['access_token']
@@ -96,9 +112,42 @@ get '/my_recently_play' do
   status_code = res.code.to_i
 
   if status_code == 200
-    JSON.parse(res.body)
+    session['now_playing'] = {
+      action: :my_recently_play,
+      data: JSON.parse(res.body)
+    }
+    redirect '/now-playing'
   else
-    status status_code
-    res.message
+    @error = {
+      status: status_code,
+      message: res.message
+    }
+
+    erb :not_playing
   end
+end
+
+def load_image_b64(url)
+  response = Net::HTTP.get_response(URI(url))
+  Base64.encode64(response.body).gsub("\n", "")
+end
+
+def make_attrs data: {}
+  if data.empty?
+    return { }
+  end
+
+  item = data["item"]
+  @img = load_image_b64(item["album"]["images"][1]["url"])
+  @artist_name = item["artists"][0]["name"]
+  @song_name = item["name"]
+  @url = item["external_urls"]["spotify"]
+
+  return {
+    img: @img,
+    artist_name: @artist_name,
+    song_name: @song_name,
+    url: @url,
+    item: item
+  }
 end

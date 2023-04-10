@@ -1,0 +1,15 @@
+<section class="">
+  <div>
+    <% unless @svg.empty? %>
+      <% @svg.each do |key, value| %>
+        <% if key == :img || key == 'img' %>
+          <div>
+            <% img_data = "data:image/jpeg;base64," + value%>
+            <img src=img_data/>
+          </div>
+        <% end %>
+        <p>"#{key}: #{value}"</p>
+      <% end %>
+    <% end %>
+  </div>
+</section>
