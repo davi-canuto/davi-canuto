@@ -1,5 +1,6 @@
-<div id="header" align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTM2YjFiZWQzZDhjMDYzN2M1MzQ4MjI5Y2NmZTU3Y2QwMDBiMDdhZiZjdD1z/gjrYDwbjnK8x36xZIO/giphy.gif"/>
+<link rel="stylesheet" href="/public/main.css">
+<div id="header">
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTM2YjFiZWQzZDhjMDYzN2M1MzQ4MjI5Y2NmZTU3Y2QwMDBiMDdhZiZjdD1z/gjrYDwbjnK8x36xZIO/giphy.gif" style="width: 80%;" 
 </div>
 
 [![trophy](https://github-profile-trophy.vercel.app/?username=davi-canuto&title=Commits,Followers,Repo&theme=onedark)](https://github.com/davi-canuto/github-profile-trophy)
