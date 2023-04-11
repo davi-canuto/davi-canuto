@@ -1,21 +1,24 @@
-<link rel="stylesheet" href="/public/main.css">
-<div id="header">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTM2YjFiZWQzZDhjMDYzN2M1MzQ4MjI5Y2NmZTU3Y2QwMDBiMDdhZiZjdD1z/gjrYDwbjnK8x36xZIO/giphy.gif" style="width: 80%;" 
+<div id="header" align="center">
+  <img src="https://tenor.com/pt-BR/view/anime-keyboard-typing-keyboard-anime-anime-aesthetic-gif-23803071.gif" style="width: 80%;" 
+</div>
+  
+  
+<div id="badges">
+  <a href="">
+    <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+  </a>
+  <a href="">
+    <img src="https://img.shields.io/badge/Mastodon-6364FF?style=for-the-badge&logo=Mastodon&logoColor=white" alt="Mastodon Badge"/>
+  </a>
+  <a href="">
+    <img src="https://img.shields.io/badge/Stack_Overflow-FE7A16?style=for-the-badge&logo=stack-overflow&logoColor=white" alt="StackOverflow Badge"/>
+  </a>
+  <a href="">
+    <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
+  </a>
 </div>
 
-[![trophy](https://github-profile-trophy.vercel.app/?username=davi-canuto&title=Commits,Followers,Repo&theme=onedark)](https://github.com/davi-canuto/github-profile-trophy)
+<!-- [![trophy](https://github-profile-trophy.vercel.app/?username=davi-canuto&title=Commits,Followers,Repo&theme=onedark&no-frame=true
+)](https://github.com/ryo-ma/github-profile-trophy) -->
+[![GitHub Streak](https://streak-stats.demolab.com/?user=davi-canuto&theme=dark)](https://git.io/streak-stats)
 
-<!--
-**davi-canuto/davi-canuto** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
