@@ -60,7 +60,10 @@ get '/callback' do
 end
 
 get '/now-playing' do
-  @svg = make_attrs(data: session['now_playing'])
+  response = make_attrs(data: $now_playing)
+  @song_name = response[:song_name]
+  @artist_name = response[:artist_name]
+  @url = response[:url]
 
   erb :spotify
 end
@@ -80,7 +83,7 @@ get '/my-current-track' do
   status_code = res.code.to_i
 
   if status_code == 200
-    session['now_playing'] = {
+    $now_playing = {
       action: :my_current_track,
       data: JSON.parse(res.body)
     }
@@ -112,7 +115,7 @@ get '/my-recently-play' do
   status_code = res.code.to_i
 
   if status_code == 200
-    session['now_playing'] = {
+    $now_playing = {
       action: :my_recently_play,
       data: JSON.parse(res.body)
     }
@@ -137,14 +140,18 @@ def make_attrs data: {}
     return { }
   end
 
-  item = data["item"]
-  @img = load_image_b64(item["album"]["images"][1]["url"])
+  item = data[:data]["item"]
+
+  image_data = Base64.decode64(load_image_b64(item["album"]["images"][1]["url"]))
+  File.open('public/assets/album.jpg', 'wb') do |f|
+    f.write image_data
+  end
+
   @artist_name = item["artists"][0]["name"]
   @song_name = item["name"]
   @url = item["external_urls"]["spotify"]
 
   return {
-    img: @img,
     artist_name: @artist_name,
     song_name: @song_name,
     url: @url,
