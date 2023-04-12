@@ -52,7 +52,7 @@ get '/callback' do
     session['access_token'] = tokens['access_token']
     session['refresh_token'] = tokens['refresh_token']
 
-    redirect '/my-current-track'
+    redirect '/now-playing'
   else
     status 401
     "Failed to authenticate with Spotify"
@@ -60,6 +60,10 @@ get '/callback' do
 end
 
 get '/now-playing' do
+  get_my_current_track(session['refresh_token'])
+  if $now_playing.status_code == 204
+    get_my_latest_track(session['token'],session['refresh_token'])
+  end
   response = make_attrs(data: $now_playing)
   @song_name = response[:song_name]
   @artist_name = response[:artist_name]
@@ -68,9 +72,9 @@ get '/now-playing' do
   erb :spotify
 end
 
-get '/my-current-track' do
+def get_my_current_track refresh_token
   spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
-  tokens = spotify_auth_api.refresh_tokens(session['refresh_token'])
+  tokens = spotify_auth_api.refresh_tokens(refresh_token)
   token = tokens['access_token']
 
   uri = URI('https://api.spotify.com/v1/me/player/currently-playing')
@@ -82,23 +86,34 @@ get '/my-current-track' do
   end
   status_code = res.code.to_i
 
+  res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+    http.request(req)
+  end
+
+  status_code = res.code.to_i
+
   if status_code == 200
-    $now_playing = {
+    return {
       action: :my_current_track,
-      data: JSON.parse(res.body)
+      data: JSON.parse(res.body),
+      status_code: status_code
     }
     redirect '/now-playing'
   elsif status_code == 204
-    redirect '/my-recently-play'
+    return {
+      action: :my_current_track,
+      data: JSON.parse(res.body),
+      status: status_code
+    }
   else
     @error = {
       status: status_code,
       message: res.message
     }
-
-    erb :not_playing
+    @error
   end
 end
+
 
 get '/my-recently-play' do
   spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
