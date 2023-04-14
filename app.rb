@@ -60,7 +60,7 @@ end
 # ROUTES
 
 get '/' do
-  redirect_uri = $enviroment == :development ? 'http://localhost:9292/callback' : 'https://github.com/davi-canuto'
+  redirect_uri = $enviroment == :development ? 'http://localhost:9292/callback' : 'https://davi-canuto-production.up.railway.app/'
   state = SecureRandom.hex(16)
   scope = 'user-read-currently-playing user-read-recently-played'
 
