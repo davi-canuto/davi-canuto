@@ -4,7 +4,7 @@ class SpotifyAuthApi
     @client_secret = client_secret
   end
 
-  def refresh_tokens(refresh_token)
+  def refresh_tokens refresh_token
     grant = Base64.strict_encode64("#{@client_id}:#{@client_secret}")
 
     uri = URI.parse('https://accounts.spotify.com/api/token')
@@ -24,7 +24,7 @@ class SpotifyAuthApi
     end
   end
 
-  def get_tokens(code, redirect_uri)
+  def get_tokens code, redirect_uri
     grant = Base64.strict_encode64("#{@client_id}:#{@client_secret}")
 
     uri = URI.parse('https://accounts.spotify.com/api/token')

@@ -20,6 +20,7 @@ end
 
 enable :sessions
 set :session_secret, ENV['SESSION_SECRET']
+$enviroment = settings.environment
 
 # HELPERS
 
@@ -59,7 +60,7 @@ end
 # ROUTES
 
 get '/' do
-  redirect_uri = 'http://localhost:9292/callback'
+  redirect_uri = $enviroment == :development ? 'http://localhost:9292/callback' : 'https://github.com/davi-canuto'
   state = SecureRandom.hex(16)
   scope = 'user-read-currently-playing user-read-recently-played'
 
