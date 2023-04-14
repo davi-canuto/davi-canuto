@@ -9,6 +9,7 @@ require 'erb'
 require 'dotenv/load'
 
 require_relative 'models/spotify_auth_api'
+require_relative 'models/spotify_api'
 
 configure do
   file = File.new("#{settings.root}/log/#{settings.environment}.log", 'a+')
@@ -32,7 +33,11 @@ def make_attrs data: {}
     return {}
   end
 
-  item = data[:data]["item"]
+  item = if data[:action] == :current_track
+    data[:data]["item"]
+  else
+    data[:data]
+  end
 
   image_data = Base64.decode64(load_image_b64(item["album"]["images"][1]["url"]))
   File.open('public/assets/album.jpg', 'wb') do |f|
@@ -50,70 +55,6 @@ def make_attrs data: {}
     item: item
   }
 end
-
-def get_my_current_track refresh_token
-  spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
-  tokens = spotify_auth_api.refresh_tokens(refresh_token)
-  token = tokens['access_token']
-
-  uri = URI('https://api.spotify.com/v1/me/player/currently-playing')
-  req = Net::HTTP::Get.new(uri)
-  req['Authorization'] = "Bearer #{token}"
-
-  res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
-    http.request(req)
-  end
-  status_code = res.code.to_i
-
-  if status_code == 200
-    return {
-      action: :my_current_track,
-      data: JSON.parse(res.body),
-      status_code: status_code
-    }
-    redirect '/now-playing'
-  elsif status_code == 204
-    return {
-      action: :my_current_track,
-      data: JSON.parse(res.body),
-      status: status_code
-    }
-  else
-    return {
-      status: status_code,
-      message: res.message
-    }
-  end
-end
-
-def get_my_latest_track refresh_token
-  spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
-  tokens = spotify_auth_api.refresh_tokens(refresh_token)
-  token = tokens['access_token']
-
-  uri = URI('https://api.spotify.com/v1/me/player/recently-played?limit=1')
-  req = Net::HTTP::Get.new(uri)
-  req['Authorization'] = "Bearer #{token}"
-
-  res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
-    http.request(req)
-  end
-  status_code = res.code.to_i
-
-  if status_code == 200
-    return {
-      action: :my_latest_track,
-      data: JSON.parse(res.body),
-      status_code: status_code
-    }
-  else
-    return {
-      status: status_code,
-      message: res.message
-    }
-  end
-end
-
 
 # ROUTES
 
@@ -155,9 +96,14 @@ get '/callback' do
 end
 
 get '/now-playing' do
-  _response = get_my_current_track(session['refresh_token'])
+  spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
+  tokens = spotify_auth_api.refresh_tokens(session['refresh_token'])
+  token = tokens['access_token']
+
+  spotify_api = SpotifyApi.new(token)
+  _response = spotify_api.current_track
   if _response[:status_code] == 204
-    _response = get_my_latest_track(session['refresh_token'])
+    _response = spotify_api.latest_track
   end
   response = make_attrs(data: _response)
   @song_name = response[:song_name]
