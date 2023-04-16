@@ -20,5 +20,5 @@
 
 <!-- [![trophy](https://github-profile-trophy.vercel.app/?username=davi-canuto&title=Commits,Followers,Repo&theme=onedark&no-frame=true
 )](https://github.com/ryo-ma/github-profile-trophy) -->
-[![GitHub Streak](https://streak-stats.demolab.com/?user=davi-canuto&theme=dark)](https://git.io/streak-stats)
+<!-- [![GitHub Streak](https://streak-stats.demolab.com/?user=davi-canuto&theme=dark)](https://git.io/streak-stats) -->
 
