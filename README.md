@@ -1,10 +1,17 @@
-## Hi, I'm Davi 🧙
+# Hi, I'm Davi 🧙
   
-<div id="header" align="center">
-  <img src="https://tenor.com/pt-BR/view/anime-keyboard-typing-keyboard-anime-anime-aesthetic-gif-23803071.gif" style="width: 80%;" 
+<div id="header">
+  <img src="https://gifs.eco.br/wp-content/uploads/2022/11/gifs-de-ragnarok-online-5.gif" style="width: 50%;">
 </div>
-  
-  
+
+- I work with the backend side of things (the best side!).
+- I am the guardian of logic and order, keeping data in line and systems in harmony.
+- I work with synchronizing the asynchronous, turning complexity into simplicity.
+- I may not be a frontend wizard, but at least my code doesn't make the browser cry.
+
+### [Learn my portifolio here(when go out)](https://github.com/davi-canuto?tab=repositories)
+
+## Contacts
 <div id="badges">
   <a href="https://www.linkedin.com/in/davi-canuto-b10ab11b7/">
     <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
@@ -22,4 +29,5 @@
     <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
   </a>
 </div>
-  
+
+### There is no try, there is only do
