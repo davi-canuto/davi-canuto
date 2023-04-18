@@ -47,6 +47,7 @@ class SpotifyApi
       end
 
       return {
+        action: :latest_track,
         message: res.message,
         status_code: status_code
       }
