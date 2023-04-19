@@ -1,6 +1,5 @@
 .byebug_history
 /.byebug_history
 .env
-log/*.log
 /public/assets/album.png
 public/assets/album.png
