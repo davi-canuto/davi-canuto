@@ -33,11 +33,12 @@ class SpotifyAuthApi
 
     headers = { 'Authorization' => "Basic #{grant}" }
     req = Net::HTTP::Post.new(uri.request_uri, headers)
-    data = { 'grant_type' => 'authorization_code',
-             'code' => code, 'redirect_uri' => redirect_uri }
+    data = { 'grant_type' => 'authorization_code','code' => code, 'redirect_uri' => redirect_uri }
     req.set_form_data(data)
 
     res = http.request(req)
+    puts(res.body)
+
     if res.kind_of? Net::HTTPSuccess
       json = JSON.parse(res.body)
       json.slice('access_token', 'refresh_token')
