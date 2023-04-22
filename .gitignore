@@ -1,5 +1,4 @@
-.byebug_history
-/.byebug_history
+.vercel
 .env
-/public/assets/album.png
-public/assets/album.png
+node_modules
+.DS_STORE
