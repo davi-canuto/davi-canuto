@@ -1,8 +1,22 @@
-<section>
-  <div>
-    <p><%=@song_name%></p>
-    <p><%=@artist_name%></p>
-    <p><%=@url%></p>
-    <img src="/assets/album.jpg" alt="">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+  <>
+  <div class="player">
+    <div class="player-info">
+      <img src="/assets/album.jpg" alt="" class="album-cover">
+      <div class="song-info">
+        <p class="song-name"><%= @song_name %></p>
+        <p class="artist-name"><%= @artist_name %></p>
+      </div>
+    </div>
   </div>
-</section>
+</body>
+</html>
