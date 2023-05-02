@@ -9,10 +9,13 @@ class SpotifyApi
     begin
       res = get("/me/player/currently-playing")
       status_code = res.code.to_i
+      res_parsed = JSON.parse(res.body) if res.body
+      res_track = self.get_track(res_parsed["item"]["id"]) if res_parsed
 
       return {
         action: :current_track,
-        data: JSON.parse(res.body),
+        data: res_parsed,
+        track: JSON.parse(res_track.body),
         status_code: status_code
       } if status_code == 200
 
@@ -32,16 +35,16 @@ class SpotifyApi
 
   def latest_track
     begin
-      res = get("/me/player/recently-played?limit=1")
+      res = get("/me/player/recently-played?limit=10")
       status_code = res.code.to_i
 
       if status_code == 200
-        track_id = JSON.parse(res.body)["items"].last["track"]["id"]
-        res = self.get_track(track_id)
+        track_id = JSON.parse(res.body)["items"].sample["track"]["id"]
+        new_res = self.get_track(track_id)
 
         return {
           action: :latest_track,
-          data: JSON.parse(res.body),
+          data: JSON.parse(new_res.body),
           status_code: status_code
         }
       end

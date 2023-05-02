@@ -30,24 +30,34 @@ def load_image_b64(url)
 end
 
 def make_attrs data: {}
-  if data.empty?
+  if data.nil? || data.empty?
     return {}
   end
 
   item = if data[:action] == :current_track
-    data[:data]["item"]
+    {
+      item: data[:data]["item"],
+      track_info: data[:track]
+    }
   else
-    data[:data]
+    {
+      item: data[:data],
+      track_info: data[:data]
+    }
   end
 
-  image_data = Base64.decode64(load_image_b64(item["album"]["images"][1]["url"]))
+  image_data = Base64.decode64(load_image_b64(item[:item]["album"]["images"][1]["url"]))
   File.open('public/assets/album.jpg', 'wb') do |f|
     f.write image_data
   end
 
-  @artist_name = item["artists"][0]["name"]
-  @song_name = item["name"]
-  @url = item["external_urls"]["spotify"]
+  @artist_name = item[:item]["artists"][0]["name"]
+  @song_name = item[:item]["name"]
+  @url = item[:item]["external_urls"]["spotify"]
+  @duration = item[:track_info]["duration_ms"]
+  @duration_min = @duration / 60000
+  @duration_sec = @duration / 1000 % 60
+  @duration = "%02d:%02d" % [@duration_min, @duration_sec]
 
   return {
     artist_name: @artist_name,
@@ -103,10 +113,10 @@ get '/now-playing' do
 
   spotify_api = SpotifyApi.new(token)
   _response = spotify_api.current_track
-  if _response[:status_code] == 204
+  if _response.nil? || _response[:status_code] == 204
     _response = spotify_api.latest_track
   end
-  response = make_attrs(data: _response)
+  response = make_attrs(data: _response )
   @song_name = response[:song_name]
   @artist_name = response[:artist_name]
   @url = response[:url]
