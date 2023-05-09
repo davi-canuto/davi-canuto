@@ -11,7 +11,7 @@
 
 ### [Learn my portifolio here(when go out)](https://github.com/davi-canuto?tab=repositories)
 <p align="center">
-  <img width="320" height="445" src="https://davi-canuto-spotify-card.vercel.app/">
+  <img width="320" height="445" src="https://davi-canuto-spotify-card.vercel.app/api/svg">
 </p>
 
 ## Contacts
