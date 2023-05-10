@@ -10,9 +10,6 @@
 - I may not be a frontend wizard, but at least my code doesn't make the browser cry.
 
 ### [Learn my portifolio here(when go out)](https://github.com/davi-canuto?tab=repositories)
-<p align="center">
-  <img width="320" height="445" src="https://davi-canuto-spotify-card.vercel.app/api/svg">
-</p>
 
 ## Contacts
 <div id="badges">
@@ -32,5 +29,8 @@
     <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
   </a>
 </div>
+<p>
+  <img width="250" height="355" src="https://davi-canuto-spotify-card.vercel.app/api/spotify-player">
+</p>
 
 ### There is no try, there is only do
