@@ -5,7 +5,6 @@ require 'net/http'
 require 'uri'
 require 'byebug'
 require 'sinatra'
-require 'erb'
 require 'dotenv/load'
 
 require_relative 'models/spotify_auth_api'
@@ -24,11 +23,6 @@ $enviroment = settings.environment
 
 # HELPERS
 
-def load_image_b64(url)
-  response = Net::HTTP.get_response(URI(url))
-  Base64.encode64(response.body).gsub("\n", "")
-end
-
 def make_attrs data: {}
   if data.empty?
     return {}
@@ -40,19 +34,16 @@ def make_attrs data: {}
     data[:data]
   end
 
-  image_data = Base64.decode64(load_image_b64(item["album"]["images"][1]["url"]))
-  File.open('public/assets/album.jpg', 'wb') do |f|
-    f.write image_data
-  end
-
   @artist_name = item["artists"][0]["name"]
   @song_name = item["name"]
   @url = item["external_urls"]["spotify"]
+  @image = item["album"]["images"][1]["url"]
 
   return {
     artist_name: @artist_name,
     song_name: @song_name,
     url: @url,
+    image: @image,
     item: item
   }
 end
@@ -110,6 +101,14 @@ get '/now-playing' do
   @song_name = response[:song_name]
   @artist_name = response[:artist_name]
   @url = response[:url]
+  @image_url = response[:image]
 
-  erb :spotify
+  content_type :json
+
+  {
+    song_name: @song_name,
+    artist_name: @artist_name,
+    url: @url,
+    image: @image
+  }.to_json
 end

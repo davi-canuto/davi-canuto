@@ -84,3 +84,11 @@
 ::1 - - [23/Apr/2023:18:42:03 -0300] "GET /now-playing HTTP/1.1" 200 553 70.9648
 ::1 - - [23/Apr/2023:18:42:03 -0300] "GET /main.css HTTP/1.1" 304 - 0.0034
 ::1 - - [23/Apr/2023:18:42:03 -0300] "GET /assets/album.jpg HTTP/1.1" 200 28457 0.0036
+::1 - - [10/May/2023:11:04:35 -0300] "GET / HTTP/1.1" 302 - 0.0022
+::1 - - [10/May/2023:11:04:35 -0300] "GET /callback?code=AQAaXf3HB9-btTrmMTKHZEl4VYYRKyckmtwuend2pMJJqLZKqgX0MQel1mRz6yYMvb97Sj-kJUMcIPc5d-4aO5PvAXc6t8paXlXlQFT56d6kt5-NmQJ0fwJj-gGhKdIzPRSXAW1dUcLU4z6M6Q1kK3iFsgEbmyL-0FIKoDw-oHrOmiSOedfAMc29aRyf6Ke-VH5nPW2oz9B0WjyCZqNQta2bAMJWwqfMzKoZNZLXTxju7VE9frt8mi5p&state=6ef5a162e7fb140c25cfa4fc8b27a8d6 HTTP/1.1" 302 - 0.3996
+::1 - - [10/May/2023:11:06:38 -0300] "GET / HTTP/1.1" 302 - 0.0030
+::1 - - [10/May/2023:11:06:39 -0300] "GET /callback?code=AQBNeFWUpvWbIXKA2hBZ7mOhQBRA40Thw0yX9_935AeldqUiKFarx5rsn5xV5OjNCk-WVcz_L9NY4WuoIH4iIbL-Qa3D7jrsxHPngzVdrdgBBzMKEmOEtYKkt_945J2ggSNQFOE0jN0lVJnukI696o-Ck5Aa-7N-ldsxriFzjsldUonnYcJK04cet_OE68ONGwFSPuAaod68a8n1r5Hsi2aFd_CxtYJlsYHcwTM8FbztOucfx4T3PBUl&state=f0ce6fab1ff79f24127851718a22df1a HTTP/1.1" 302 - 0.3281
+::1 - - [10/May/2023:11:08:06 -0300] "GET /now-playing HTTP/1.1" 200 120 87.6392
+::1 - - [10/May/2023:11:08:07 -0300] "GET /favicon.ico HTTP/1.1" 404 469 0.0008
+::1 - - [10/May/2023:11:08:57 -0300] "GET /__sinatra__/500.png HTTP/1.1" 200 24378 0.0063
+::1 - - [10/May/2023:11:16:22 -0300] "GET /now-playing HTTP/1.1" 200 195 2.1061
