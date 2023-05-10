@@ -17,8 +17,6 @@ configure do
   use Rack::CommonLogger, file
 end
 
-enable :sessions
-set :session_secret, ENV['SESSION_SECRET']
 $enviroment = settings.environment
 
 # HELPERS
@@ -51,46 +49,8 @@ end
 # ROUTES
 
 get '/' do
-  redirect_uri = $enviroment == :development ? 'http://localhost:9292/callback' : 'https://davi-canuto.onrender.com/callback'
-  state = SecureRandom.hex(16)
-  scope = 'user-read-currently-playing user-read-recently-played'
-
-  uri = URI('https://accounts.spotify.com/authorize')
-
-  uri.query = URI.encode_www_form({
-    response_type: 'code',
-    client_id: ENV['SPOTIFY_CLIENT_ID'],
-    scope: scope,
-    redirect_uri: redirect_uri,
-    state: state
-  })
-
-  redirect uri.to_s
-end
-
-# Callback for Spotify OAuth authentication.
-get '/callback' do
-  code = params['code']
-  redirect_uri = "#{request.base_url}/callback"
-
   spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
-  tokens = spotify_auth_api.get_tokens(code, redirect_uri)
-
-  if tokens
-    session['access_token'] = tokens['access_token']
-    session['refresh_token'] = tokens['refresh_token']
-
-    redirect '/now-playing'
-  else
-    status 401
-    "Failed to authenticate with Spotify"
-  end
-end
-
-get '/now-playing' do
-  spotify_auth_api = SpotifyAuthApi.new(ENV['SPOTIFY_CLIENT_ID'],ENV['SPOTIFY_CLIENT_SECRET'])
-  tokens = spotify_auth_api.refresh_tokens(session['refresh_token'])
-  token = tokens['access_token']
+  token = spotify_auth_api.get_token
 
   spotify_api = SpotifyApi.new(token)
   _response = spotify_api.current_track
