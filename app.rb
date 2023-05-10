@@ -21,6 +21,13 @@ $enviroment = settings.environment
 
 # HELPERS
 
+def load_image_base64 url
+  uri = URI(url)
+  response = Net::HTTP.get_response(uri)
+
+  return Base64.encode64(response.body).gsub("\n", '')
+end
+
 def make_attrs data: {}
   if data.empty?
     return {}
@@ -35,7 +42,7 @@ def make_attrs data: {}
   @artist_name = item["artists"][0]["name"]
   @song_name = item["name"]
   @url = item["external_urls"]["spotify"]
-  @image = item["album"]["images"][1]["url"]
+  @image = load_image_base64(item["album"]["images"][1]["url"])
 
   return {
     artist_name: @artist_name,
