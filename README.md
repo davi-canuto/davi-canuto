@@ -29,6 +29,7 @@
     <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
   </a>
 </div>
+<p>&nbsp;</p>
 <div align="center">
   <p>
     <img width="300" height="405" src="https://davi-canuto-spotify-card.vercel.app/api/spotify-player">
