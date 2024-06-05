@@ -4,9 +4,9 @@
   <img src="https://gifs.eco.br/wp-content/uploads/2022/11/gifs-de-ragnarok-online-5.gif" style="width: 50%;">
 </div>
 
-- I work with the backend side of things (the best side!).
-- I am the guardian of logic and order, keeping data in line and systems in harmony.
-- I work with synchronizing the asynchronous, turning complexity into simplicity.
+- Work with the backend side of things (the best side!).
+- I'm the guardian of logic and order, keeping data in line and systems in harmony.
+- Work with synchronizing the asynchronous, turning complexity into simplicity.
 - I may not be a frontend wizard, but at least my code doesn't make the browser cry.
 
 ### [Learn my portifolio here(when go out)](https://github.com/davi-canuto?tab=repositories)
