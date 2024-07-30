@@ -1,7 +1,7 @@
 # Hi, I'm Davi 🧙
 
 <div id="header">
-  <img src="https://gifs.eco.br/wp-content/uploads/2022/11/gifs-de-ragnarok-online-5.gif" style="width: 50%;">
+  <img src="https://playragnarokonlinebr.com/episodios/insurreicao/img/section_historia/highlight_insurgente.gif" style="width: 50%;">
 </div>
 
 - Work with the backend side of things (the best side!).
