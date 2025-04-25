@@ -9,7 +9,7 @@
 - Work with synchronizing the asynchronous, turning complexity into simplicity.
 - I may not be a frontend wizard, but at least my code doesn't make the browser cry.
 
-### [Learn my portifolio here(when go out)](https://github.com/davi-canuto?tab=repositories)
+### <a href="https://davi-canuto.github.io/my-portifolio" target="_blank">go to my portfolio</a>
 
 ## Contacts
 
@@ -32,6 +32,9 @@
 </div>
 <p>&nbsp;</p>
 <div align="center">
+  <p>
+    <a href="https://github.com/davi-canuto/davi-canuto-spotify-card" target="_blank" style="text-decoration: none; color: black; font-size: 0.9em;"> clickme </a>
+  </p>
   <!--
     Hello! if you're here, it means you're interested in how I created this stunning music card that displays the song I'm currently listening to.
     To dive deeper into the details and learn more about its development, feel free to visit the repository I've created for it.
